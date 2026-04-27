@@ -10,10 +10,18 @@ let dbInstance = null;
 async function initDb() {
     if (dbInstance) return dbInstance;
 
-    dbInstance = await open({
-        filename: path.join(__dirname, process.env.DB_FILE || 'database.sqlite'),
-        driver: sqlite3.Database
-    });
+    try {
+        dbInstance = await open({
+            filename: path.join(__dirname, process.env.DB_FILE || 'database.sqlite'),
+            driver: sqlite3.Database
+        });
+    } catch (err) {
+        console.warn('Failed to open database in current directory, trying /tmp...', err.message);
+        dbInstance = await open({
+            filename: '/tmp/database.sqlite',
+            driver: sqlite3.Database
+        });
+    }
 
     await dbInstance.run('PRAGMA foreign_keys = ON;');
 
