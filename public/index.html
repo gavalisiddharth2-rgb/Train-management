@@ -3,43 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - TrainFlow</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>TrainFlow - Single Page App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { justify-content: center; align-items: center; }
-        .login-container {
-            width: 100%; max-width: 450px;
-            text-align: center;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #4f46e5; /* Indigo */
+    --primary-hover: #4338ca;
+    --secondary-color: #ec4899; /* Pink */
+    --accent-1: #0d9488; /* Teal */
+    --accent-2: #d97706; /* Amber */
+    
+    /* Clean Light Theme */
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border: #e2e8f0;
+    
+    --success: #10b981;
+    --danger: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo i {
+    -webkit-text-fill-color: #4f46e5;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+    background: #e0e7ff;
+}
+
+/* Main Container */
+.container {
+    max-width: 1280px;
+    margin: 2.5rem auto;
+    padding: 0 2rem;
+    flex: 1;
+    width: 100%;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px dashed var(--border);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Clean Cards */
+.glass-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    transition: all 0.3s ease;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.dashboard-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Dashboard Card Specific Colors */
+.dashboard-card:nth-child(1) i { color: #4f46e5; }
+.dashboard-card:nth-child(1):hover { border-color: #4f46e5; }
+
+.dashboard-card:nth-child(2) i { color: #ec4899; }
+.dashboard-card:nth-child(2):hover { border-color: #ec4899; }
+
+.dashboard-card:nth-child(3) i { color: #0d9488; }
+.dashboard-card:nth-child(3):hover { border-color: #0d9488; }
+
+.dashboard-card:nth-child(4) i { color: #d97706; }
+.dashboard-card:nth-child(4):hover { border-color: #d97706; }
+
+.dashboard-card i {
+    font-size: 4rem;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover i {
+    transform: scale(1.1);
+}
+
+.dashboard-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.dashboard-card p {
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: #ffffff;
+    border: 2px solid var(--border);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 1.05rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4);
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    margin-top: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: #f1f5f9;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+tr {
+    transition: background-color 0.2s ease;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+td {
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.2s forwards;
+}
+
+.modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    animation: scaleUp 0.2s forwards;
+    position: relative;
+    background: #ffffff;
+}
+
+@keyframes scaleUp {
+    to { transform: scale(1); }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f5f9;
+}
+
+.close-btn:hover {
+    color: #fff;
+    background: var(--danger);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+/* Login specific overrides */
+#welcomeUser {
+    color: var(--text-primary) !important;
+}
+
+.role-selector {
+    display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+    background: #f1f5f9; padding: 0.5rem; border-radius: 1rem;
+}
+.role-btn {
+    flex: 1; padding: 0.75rem; border: none; background: transparent; color: var(--text-secondary);
+    border-radius: 0.75rem; cursor: pointer; font-weight: 600; transition: all 0.3s;
+}
+.role-btn.active { background: var(--primary-color); color: white; }
+
+        .spa-page { display: none; width: 100%; height: 100%; }
+        .spa-page.active { display: block; }
+        
+        /* Inline login styles that were in index.html */
+        .login-container { width: 100%; max-width: 450px; text-align: center; margin: 0 auto; padding-top: 10vh; }
         .login-card { padding: 3rem 2.5rem; position: relative; }
         .login-logo { font-size: 2.5rem; margin-bottom: 2rem; justify-content: center; }
-        
-        .role-selector {
-            display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
-            background: #f1f5f9; padding: 0.5rem; border-radius: 1rem;
-        }
-        .role-btn {
-            flex: 1; padding: 0.75rem; border: none; background: transparent; color: var(--text-secondary);
-            border-radius: 0.75rem; cursor: pointer; font-weight: 600; transition: all 0.3s;
-        }
+        .role-selector { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: #f1f5f9; padding: 0.5rem; border-radius: 1rem; }
+        .role-btn { flex: 1; padding: 0.75rem; border: none; background: transparent; color: var(--text-secondary); border-radius: 0.75rem; cursor: pointer; font-weight: 600; transition: all 0.3s; }
         .role-btn.active { background: var(--primary-color); color: white; }
-        
-        .auth-toggle {
-            display: flex; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border);
-        }
-        .auth-toggle-btn {
-            flex: 1; padding: 1rem; background: none; border: none; font-weight: 700; font-size: 1.1rem;
-            color: var(--text-secondary); cursor: pointer; transition: all 0.3s;
-            border-bottom: 3px solid transparent; margin-bottom: -2px;
-        }
+        .auth-toggle { display: flex; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); }
+        .auth-toggle-btn { flex: 1; padding: 1rem; background: none; border: none; font-weight: 700; font-size: 1.1rem; color: var(--text-secondary); cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent; margin-bottom: -2px; }
         .auth-toggle-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
-        
         #registerForm { display: none; }
         .extra-fields { display: none; }
     </style>
 </head>
 <body>
+<section id="page-index" class="spa-page active">
+
     <div class="container login-container">
         <div class="glass-card login-card">
             <a href="#" class="logo login-logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
@@ -110,6 +501,639 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    
+
+</section>
+<section id="page-admin_dashboard" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" onclick="navigateTo('index')" class="logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
+        <div class="nav-links">
+            <a href="#" onclick="navigateTo('index')" class="active">Dashboard</a>
+            <a href="#" onclick="navigateTo('trains')">Trains</a>
+            <a href="#" onclick="navigateTo('passengers')">Passengers</a>
+            <a href="#" onclick="navigateTo('tickets')">Tickets</a>
+            <a href="#" onclick="navigateTo('supervisors')">Supervisors</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Dashboard</h1>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="#" onclick="navigateTo('trains')" class="dashboard-card glass-card">
+                <i class="fa-solid fa-train-tram"></i>
+                <h2>Manage Trains</h2>
+                <p>Add, edit, or remove train schedules and routes.</p>
+            </a>
+            
+            <a href="#" onclick="navigateTo('passengers')" class="dashboard-card glass-card">
+                <i class="fa-solid fa-users"></i>
+                <h2>Manage Passengers</h2>
+                <p>Register and maintain passenger records.</p>
+            </a>
+
+            <a href="#" onclick="navigateTo('tickets')" class="dashboard-card glass-card">
+                <i class="fa-solid fa-ticket"></i>
+                <h2>Ticket Booking</h2>
+                <p>Book, cancel, and view passenger tickets.</p>
+            </a>
+
+            <a href="#" onclick="navigateTo('supervisors')" class="dashboard-card glass-card">
+                <i class="fa-solid fa-user-tie"></i>
+                <h2>Technical Supervisors</h2>
+                <p>Assign supervisors to manage technical aspects of trains.</p>
+            </a>
+        </div>
+    </div>
+
+</section>
+<section id="page-passenger_dashboard" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" class="logo"><i class="fa-solid fa-train"></i> TrainFlow <span style="font-size: 1rem; color: var(--text-secondary); margin-left: 10px;">Passenger Portal</span></a>
+        <div class="nav-links">
+            <span id="welcomeUser" style="color: white; font-weight: bold; margin-right: 1rem;"></span>
+            <button class="btn btn-sm btn-danger" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Available Trains</h1>
+        </div>
+
+        <div class="table-container" style="margin-bottom: 3rem;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Train Name</th>
+                        <th>Route</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="passengerTrainsBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-header">
+            <h1>My Tickets</h1>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Train</th>
+                        <th>Route</th>
+                        <th>Date</th>
+                        <th>Seat</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="myTicketsBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Razorpay Style Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content glass-card" style="padding: 0; overflow: hidden; max-width: 600px;">
+            <div style="background: #0f172a; color: white; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-shield-halved" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                    <h3 style="margin: 0; font-weight: 500;">Razorpay <span style="font-size: 0.8rem; opacity: 0.7;">Demo Checkout</span></h3>
+                </div>
+                <span class="close-btn" onclick="closeModal('paymentModal')" style="position: static; color: white; background: none;">&times;</span>
+            </div>
+            
+            <div style="display: flex; min-height: 400px;">
+                <!-- Sidebar Tabs -->
+                <div style="width: 150px; background: #f8fafc; border-right: 1px solid var(--border); display: flex; flex-direction: column;">
+                    <button class="pay-tab active" onclick="switchPayTab('card')" id="tab-card">
+                        <i class="fa-solid fa-credit-card"></i> Card
+                    </button>
+                    <button class="pay-tab" onclick="switchPayTab('upi')" id="tab-upi">
+                        <i class="fa-brands fa-google-pay"></i> UPI
+                    </button>
+                    <button class="pay-tab" onclick="switchPayTab('net')" id="tab-net">
+                        <i class="fa-solid fa-building-columns"></i> Netbanking
+                    </button>
+                </div>
+                
+                <!-- Main Content Area -->
+                <div style="flex: 1; padding: 2rem; background: white;">
+                    <form id="paymentForm" onsubmit="processPayment(event)">
+                        <input type="hidden" id="bookTrainId">
+                        
+                        <h4 style="margin-bottom: 1rem; color: var(--text-secondary); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;" id="paymentTitle">Booking Details</h4>
+                        
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                                <label style="font-size: 0.9rem;">Date</label>
+                                <input type="date" id="bookDate" required style="padding: 0.5rem;">
+                            </div>
+                            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                                <label style="font-size: 0.9rem;">Seat</label>
+                                <input type="text" id="bookSeat" placeholder="e.g. A1" required style="padding: 0.5rem;">
+                            </div>
+                        </div>
+
+                        <!-- Card Form -->
+                        <div id="pay-card" class="pay-section">
+                            <div class="form-group">
+                                <label style="font-size: 0.9rem;">Card Number</label>
+                                <input type="text" placeholder="1234 5678 9101 1121" class="pay-input">
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label style="font-size: 0.9rem;">Expiry</label>
+                                    <input type="text" placeholder="MM/YY" class="pay-input">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label style="font-size: 0.9rem;">CVV</label>
+                                    <input type="password" placeholder="123" class="pay-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Form -->
+                        <div id="pay-upi" class="pay-section" style="display: none;">
+                            <div class="form-group">
+                                <label style="font-size: 0.9rem;">Enter UPI ID</label>
+                                <input type="text" placeholder="username@upi" class="pay-input">
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem;">
+                                You will receive a payment request on your UPI app.
+                            </p>
+                        </div>
+
+                        <!-- Netbanking Form -->
+                        <div id="pay-net" class="pay-section" style="display: none;">
+                            <div class="form-group">
+                                <label style="font-size: 0.9rem;">Select Bank</label>
+                                <select class="pay-input" style="width: 100%;">
+                                    <option>HDFC Bank</option>
+                                    <option>SBI</option>
+                                    <option>ICICI Bank</option>
+                                    <option>Axis Bank</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="payBtn" style="width: 100%; margin-top: 1.5rem; background: #3b82f6;">
+                            Pay ₹500 & Book
+                        </button>
+                    </form>
+                    
+                    <div id="paymentSpinner" style="display: none; text-align: center; padding: 2rem;">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--text-primary);">Processing via Razorpay...</h3>
+                    </div>
+                    
+                    <div id="paymentSuccess" style="display: none; text-align: center; padding: 2rem; color: #10b981;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <h2>Payment Successful!</h2>
+                        <p style="color: var(--text-secondary);">Ticket confirmed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pay-tab {
+            padding: 1rem; border: none; background: transparent; text-align: left;
+            font-weight: 500; color: var(--text-secondary); cursor: pointer;
+            border-bottom: 1px solid var(--border); transition: all 0.2s; display: flex; gap: 10px; align-items: center;
+        }
+        .pay-tab:hover { background: #e2e8f0; }
+        .pay-tab.active { background: white; color: #3b82f6; border-left: 3px solid #3b82f6; font-weight: 700; }
+        .pay-input { padding: 0.6rem; border: 1px solid var(--border); border-radius: 0.5rem; width: 100%; }
+        .pay-input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+    </style>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth('Passenger');
+            loadPassengerDashboard();
+        });
+    </script>
+
+</section>
+<section id="page-supervisor_dashboard" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" class="logo"><i class="fa-solid fa-train"></i> TrainFlow <span style="font-size: 1rem; color: var(--text-secondary); margin-left: 10px;">Supervisor Portal</span></a>
+        <div class="nav-links">
+            <span id="welcomeUser" style="color: white; font-weight: bold; margin-right: 1rem;"></span>
+            <button class="btn btn-sm btn-danger" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>My Assigned Train</h1>
+        </div>
+
+        <div id="noTrainMessage" style="display: none; text-align: center; margin-top: 5rem;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+            <h2>You currently have no train assigned.</h2>
+            <p style="color: var(--text-secondary);">Please contact Train Management for assignments.</p>
+        </div>
+
+        <div id="trainDetailsCard" class="glass-card" style="display: none; max-width: 600px; margin: 0 auto; text-align: center;">
+            <i class="fa-solid fa-train" style="font-size: 5rem; color: #6366f1; margin-bottom: 1.5rem;"></i>
+            <h2 id="supTrainName" style="font-size: 2.5rem; margin-bottom: 1rem;">Train Name</h2>
+            
+            <div style="display: flex; justify-content: space-around; margin: 2rem 0; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 1rem;">
+                <div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase;">Source</p>
+                    <h3 id="supTrainSource" style="font-size: 1.5rem; color: #14b8a6;">Source</h3>
+                    <p id="supTrainDeparture" style="font-weight: bold;">00:00</p>
+                </div>
+                <div style="display: flex; align-items: center; color: var(--text-secondary);">
+                    <i class="fa-solid fa-arrow-right-long" style="font-size: 2rem;"></i>
+                </div>
+                <div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase;">Destination</p>
+                    <h3 id="supTrainDestination" style="font-size: 1.5rem; color: #ec4899;">Destination</h3>
+                    <p id="supTrainArrival" style="font-weight: bold;">00:00</p>
+                </div>
+            </div>
+            
+            <div style="color: #10b981; font-weight: bold; font-size: 1.2rem;">
+                <i class="fa-solid fa-circle-check"></i> Status: Ready for Technical Inspection
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth('Supervisor');
+            loadSupervisorDashboard();
+        });
+    </script>
+
+</section>
+<section id="page-trains" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" onclick="navigateTo('index')" class="logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
+        <div class="nav-links">
+            <a href="#" onclick="navigateTo('index')">Dashboard</a>
+            <a href="#" onclick="navigateTo('trains')" class="active">Trains</a>
+            <a href="#" onclick="navigateTo('passengers')">Passengers</a>
+            <a href="#" onclick="navigateTo('tickets')">Tickets</a>
+            <a href="#" onclick="navigateTo('supervisors')">Supervisors</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Trains Directory</h1>
+            <button class="btn btn-primary" onclick="openModal('trainModal')"><i class="fa-solid fa-plus"></i> Add Train</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="trainsTableBody">
+                    <!-- Data populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Train Modal -->
+    <div id="trainModal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('trainModal')">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Add New Train</h2>
+            <form id="trainForm" onsubmit="handleTrainSubmit(event)">
+                <input type="hidden" id="Train_ID">
+                <div class="form-group">
+                    <label>Train Name</label>
+                    <input type="text" id="Train_Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Source Station</label>
+                    <input type="text" id="Source" required>
+                </div>
+                <div class="form-group">
+                    <label>Destination Station</label>
+                    <input type="text" id="Destination" required>
+                </div>
+                <div class="form-group">
+                    <label>Departure Time</label>
+                    <input type="datetime-local" id="Departure_Time" required>
+                </div>
+                <div class="form-group">
+                    <label>Arrival Time</label>
+                    <input type="datetime-local" id="Arrival_Time" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Save Train</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', fetchTrains);
+    </script>
+
+</section>
+<section id="page-passengers" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" onclick="navigateTo('index')" class="logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
+        <div class="nav-links">
+            <a href="#" onclick="navigateTo('index')">Dashboard</a>
+            <a href="#" onclick="navigateTo('trains')">Trains</a>
+            <a href="#" onclick="navigateTo('passengers')" class="active">Passengers</a>
+            <a href="#" onclick="navigateTo('tickets')">Tickets</a>
+            <a href="#" onclick="navigateTo('supervisors')">Supervisors</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Passengers Directory</h1>
+            <button class="btn btn-primary" onclick="openModal('passengerModal')"><i class="fa-solid fa-plus"></i> Add Passenger</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Contact Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="passengersTableBody">
+                    <!-- Data populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Passenger Modal -->
+    <div id="passengerModal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('passengerModal')">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Add New Passenger</h2>
+            <form id="passengerForm" onsubmit="handlePassengerSubmit(event)">
+                <input type="hidden" id="Passenger_ID">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="Age" required min="1" max="120">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="Gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="text" id="Contact_Number" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Save Passenger</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', fetchPassengers);
+    </script>
+
+</section>
+<section id="page-tickets" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" onclick="navigateTo('index')" class="logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
+        <div class="nav-links">
+            <a href="#" onclick="navigateTo('index')">Dashboard</a>
+            <a href="#" onclick="navigateTo('trains')">Trains</a>
+            <a href="#" onclick="navigateTo('passengers')">Passengers</a>
+            <a href="#" onclick="navigateTo('tickets')" class="active">Tickets</a>
+            <a href="#" onclick="navigateTo('supervisors')">Supervisors</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Ticket Bookings</h1>
+            <button class="btn btn-primary" onclick="openTicketModal()"><i class="fa-solid fa-plus"></i> Book Ticket</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Passenger Name</th>
+                        <th>Train Name</th>
+                        <th>Booking Date</th>
+                        <th>Seat No.</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ticketsTableBody">
+                    <!-- Data populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Book/Edit Ticket Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('ticketModal')">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Book New Ticket</h2>
+            <form id="ticketForm" onsubmit="handleTicketSubmit(event)">
+                <input type="hidden" id="Ticket_ID">
+                <div class="form-group">
+                    <label>Select Passenger</label>
+                    <select id="Passenger_ID" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Train</label>
+                    <select id="Train_ID" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Booking Date</label>
+                    <input type="date" id="Booking_Date" required>
+                </div>
+                <div class="form-group">
+                    <label>Seat Number</label>
+                    <input type="text" id="Seat_Number" required placeholder="e.g., A1-12">
+                </div>
+                <div class="form-group" id="statusGroup" style="display: none;">
+                    <label>Booking Status</label>
+                    <select id="Status">
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchTickets();
+            loadDropdowns();
+        });
+    </script>
+
+</section>
+<section id="page-supervisors" class="spa-page ">
+
+    <nav class="navbar">
+        <a href="#" onclick="navigateTo('index')" class="logo"><i class="fa-solid fa-train"></i> TrainFlow</a>
+        <div class="nav-links">
+            <a href="#" onclick="navigateTo('index')">Dashboard</a>
+            <a href="#" onclick="navigateTo('trains')">Trains</a>
+            <a href="#" onclick="navigateTo('passengers')">Passengers</a>
+            <a href="#" onclick="navigateTo('tickets')">Tickets</a>
+            <a href="#" onclick="navigateTo('supervisors')" class="active">Supervisors</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Technical Supervisors</h1>
+            <button class="btn btn-primary" onclick="openSupervisorModal()"><i class="fa-solid fa-plus"></i> Add Supervisor</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Supervisor ID</th>
+                        <th>Name</th>
+                        <th>Contact Number</th>
+                        <th>Assigned Train</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="supervisorsTableBody">
+                    <!-- Data populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Supervisor Modal -->
+    <div id="supervisorModal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-btn" onclick="closeModal('supervisorModal')">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Add New Supervisor</h2>
+            <form id="supervisorForm" onsubmit="handleSupervisorSubmit(event)">
+                <input type="hidden" id="Supervisor_ID">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="text" id="Contact_Number" required>
+                </div>
+                <div class="form-group">
+                    <label>Assign Train (Optional)</label>
+                    <select id="Assigned_Train_ID">
+                        <option value="">None</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Save Supervisor</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSupervisors();
+            loadSupervisorDropdowns();
+        });
+    </script>
+
+</section>
+
+    <script src="app.js"></script>
+    <script>
+        function navigateTo(pageId) {
+            document.querySelectorAll('.spa-page').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // Execute onload functions if needed
+            if(pageId === 'admin_dashboard') checkAuth('Admin');
+            if(pageId === 'passenger_dashboard') { checkAuth('Passenger'); loadPassengerDashboard(); }
+            if(pageId === 'supervisor_dashboard') { checkAuth('Supervisor'); loadSupervisorDashboard(); }
+            if(pageId === 'trains') { checkAuth('Admin'); fetchTrains(); }
+            if(pageId === 'passengers') { checkAuth('Admin'); fetchPassengers(); }
+            if(pageId === 'tickets') { checkAuth('Admin'); fetchTickets(); loadDropdowns(); }
+            if(pageId === 'supervisors') { checkAuth('Admin'); fetchSupervisors(); loadSupervisorDropdowns(); }
+            
+            // Update sidebar active states
+            document.querySelectorAll('.sidebar ul li a').forEach(a => a.classList.remove('active'));
+            const link = document.querySelector('.sidebar ul li a[onclick="navigateTo(\'' + pageId + '\')"]');
+            if(link) link.classList.add('active');
+        }
+
+        // Fix all anchor links to use SPA navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a').forEach(a => {
+                const href = a.getAttribute('href');
+                if (href && href.endsWith('.html')) {
+                    const page = href.replace('.html', '');
+                    a.setAttribute('href', '#');
+                    a.setAttribute('onclick', `navigateTo('${page}')`);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -516,9 +516,9 @@ async function handleLogin(e) {
             const data = await res.json();
             localStorage.setItem('user', JSON.stringify(data.user));
             
-            if (data.user.role === 'Admin') window.location.href = 'admin_dashboard.html';
-            else if (data.user.role === 'Passenger') window.location.href = 'passenger_dashboard.html';
-            else if (data.user.role === 'Supervisor') window.location.href = 'supervisor_dashboard.html';
+            if (data.user.role === 'Admin') navigateTo('admin_dashboard');
+            else if (data.user.role === 'Passenger') navigateTo('passenger_dashboard');
+            else if (data.user.role === 'Supervisor') navigateTo('supervisor_dashboard');
         } else {
             alert('Invalid credentials. Please try again.');
         }
@@ -530,14 +530,14 @@ async function handleLogin(e) {
 
 function logout() {
     localStorage.removeItem('user');
-    window.location.href = 'index.html';
+    navigateTo('index');
 }
 
 function checkAuth(requiredRole) {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || (requiredRole && user.role !== requiredRole)) {
         alert('Unauthorized access. Please login.');
-        window.location.href = 'index.html';
+        navigateTo('index');
     } else {
         const welcome = document.getElementById('welcomeUser');
         if (welcome) welcome.innerText = `Welcome, ${user.name}`;

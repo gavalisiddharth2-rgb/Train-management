@@ -2,3 +2,4 @@ node_modules/
 
 database.sqlite
 .DS_Store
+package-lock.json
