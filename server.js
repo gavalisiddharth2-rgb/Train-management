@@ -8,24 +8,33 @@ require('dotenv').config();
 let dbInstance = null;
 
 async function initDb() {
-    if (dbInstance) return dbInstance;
+    if (dbInstance) {
+        try {
+            await dbInstance.get('SELECT 1');
+            return dbInstance;
+        } catch (err) {
+            console.warn('Database connection lost. Reconnecting...', err.message);
+            dbInstance = null;
+        }
+    }
 
+    let localDb = null;
     try {
-        dbInstance = await open({
+        localDb = await open({
             filename: path.join(__dirname, process.env.DB_FILE || 'database.sqlite'),
             driver: sqlite3.Database
         });
     } catch (err) {
         console.warn('Failed to open database in current directory, trying /tmp...', err.message);
-        dbInstance = await open({
+        localDb = await open({
             filename: '/tmp/database.sqlite',
             driver: sqlite3.Database
         });
     }
 
-    await dbInstance.run('PRAGMA foreign_keys = ON;');
+    await localDb.run('PRAGMA foreign_keys = ON;');
 
-    await dbInstance.exec(`
+    await localDb.exec(`
         CREATE TABLE IF NOT EXISTS Admin (
             Admin_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Username VARCHAR(100) UNIQUE NOT NULL,
@@ -72,9 +81,9 @@ async function initDb() {
         );
     `);
 
-    const { count } = await dbInstance.get('SELECT COUNT(*) as count FROM Train');
+    const { count } = await localDb.get('SELECT COUNT(*) as count FROM Train');
     if (count === 0) {
-        await dbInstance.exec(`
+        await localDb.exec(`
             INSERT INTO Train (Train_Name, Source, Destination, Departure_Time, Arrival_Time) VALUES 
             ('Pune – Mumbai Deccan Express', 'Pune', 'Mumbai', '07:15:00', '11:05:00'),
             ('Pune – Mumbai Intercity Express', 'Pune', 'Mumbai', '17:55:00', '21:05:00'),
@@ -109,6 +118,7 @@ async function initDb() {
         `);
     }
 
+    dbInstance = localDb;
     return dbInstance;
 }
 
